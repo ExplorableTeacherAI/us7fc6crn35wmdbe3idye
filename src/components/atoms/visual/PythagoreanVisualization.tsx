@@ -23,8 +23,8 @@ export const PythagoreanVisualization = ({ sideA, sideB }: PythagoreanVisualizat
         if (!ctx) return;
 
         // Canvas setup
-        const width = 400;
-        const height = 400;
+        const width = 500;
+        const height = 500;
         canvas.width = width;
         canvas.height = height;
 
@@ -33,18 +33,18 @@ export const PythagoreanVisualization = ({ sideA, sideB }: PythagoreanVisualizat
         ctx.fillRect(0, 0, width, height);
 
         // Scale factor for visualization (pixels per unit)
-        const scale = 30;
+        const scale = 35;
 
-        // Starting position
-        const startX = 80;
-        const startY = 300;
+        // Starting position (right angle at this point)
+        const startX = 150;
+        const startY = 350;
 
-        // Calculate positions
+        // Calculate triangle vertices
         const legAEnd = { x: startX + sideA * scale, y: startY };
         const legBEnd = { x: startX, y: startY - sideB * scale };
         const hypotenuse = Math.sqrt(sideA * sideA + sideB * sideB);
 
-        // Draw square on side A (blue)
+        // Draw square on side A (blue) - to the right of the triangle
         ctx.fillStyle = '#3B82F6';
         ctx.globalAlpha = 0.3;
         ctx.fillRect(legAEnd.x, legAEnd.y, sideA * scale, sideA * scale);
@@ -53,14 +53,14 @@ export const PythagoreanVisualization = ({ sideA, sideB }: PythagoreanVisualizat
         ctx.lineWidth = 2;
         ctx.strokeRect(legAEnd.x, legAEnd.y, sideA * scale, sideA * scale);
 
-        // Draw square on side B (green)
+        // Draw square on side B (green) - to the left of the triangle
         ctx.fillStyle = '#10B981';
         ctx.globalAlpha = 0.3;
-        ctx.fillRect(startX - sideB * scale, legBEnd.y - sideB * scale, sideB * scale, sideB * scale);
+        ctx.fillRect(startX - sideB * scale, startY - sideB * scale, sideB * scale, sideB * scale);
         ctx.globalAlpha = 1;
         ctx.strokeStyle = '#10B981';
         ctx.lineWidth = 2;
-        ctx.strokeRect(startX - sideB * scale, legBEnd.y - sideB * scale, sideB * scale, sideB * scale);
+        ctx.strokeRect(startX - sideB * scale, startY - sideB * scale, sideB * scale, sideB * scale);
 
         // Draw the right triangle
         ctx.strokeStyle = '#1F2937';
@@ -73,7 +73,7 @@ export const PythagoreanVisualization = ({ sideA, sideB }: PythagoreanVisualizat
         ctx.stroke();
 
         // Draw right angle marker
-        const markerSize = 15;
+        const markerSize = 12;
         ctx.strokeStyle = '#1F2937';
         ctx.lineWidth = 1.5;
         ctx.beginPath();
@@ -83,9 +83,9 @@ export const PythagoreanVisualization = ({ sideA, sideB }: PythagoreanVisualizat
         ctx.stroke();
 
         // Draw square on hypotenuse (red)
-        // We need to rotate this square
+        // Calculate the vector along the hypotenuse
         const hypotenuseLength = hypotenuse * scale;
-        const angle = Math.atan2(-sideB, sideA);
+        const angle = Math.atan2(legBEnd.y - legAEnd.y, legBEnd.x - legAEnd.x);
 
         ctx.save();
         ctx.translate(legAEnd.x, legAEnd.y);
@@ -93,32 +93,32 @@ export const PythagoreanVisualization = ({ sideA, sideB }: PythagoreanVisualizat
 
         ctx.fillStyle = '#EF4444';
         ctx.globalAlpha = 0.3;
-        ctx.fillRect(0, 0, hypotenuseLength, hypotenuseLength);
+        ctx.fillRect(0, -hypotenuseLength, hypotenuseLength, hypotenuseLength);
         ctx.globalAlpha = 1;
         ctx.strokeStyle = '#EF4444';
         ctx.lineWidth = 2;
-        ctx.strokeRect(0, 0, hypotenuseLength, hypotenuseLength);
+        ctx.strokeRect(0, -hypotenuseLength, hypotenuseLength, hypotenuseLength);
 
         ctx.restore();
 
         // Draw labels for sides
         ctx.fillStyle = '#374151';
-        ctx.font = 'bold 14px sans-serif';
+        ctx.font = 'bold 13px sans-serif';
         ctx.textAlign = 'center';
 
         // Label side A
-        ctx.fillText(`a = ${sideA.toFixed(1)}`, startX + (sideA * scale) / 2, startY + 25);
+        ctx.fillText(`a = ${sideA.toFixed(1)}`, startX + (sideA * scale) / 2, startY + 30);
 
         // Label side B
-        ctx.fillText(`b = ${sideB.toFixed(1)}`, startX - 30, startY - (sideB * scale) / 2);
+        ctx.fillText(`b = ${sideB.toFixed(1)}`, startX - 35, startY - (sideB * scale) / 2);
 
         // Label hypotenuse
-        const hypMidX = startX + (legAEnd.x - startX) / 2 - sideB * scale / 4;
-        const hypMidY = startY - (startY - legBEnd.y) / 2 - sideA * scale / 4;
-        ctx.fillText(`c = ${hypotenuse.toFixed(2)}`, hypMidX, hypMidY - 15);
+        const hypMidX = startX + (legAEnd.x - startX) / 2 + 20;
+        const hypMidY = startY - (startY - legBEnd.y) / 2 - 15;
+        ctx.fillText(`c = ${hypotenuse.toFixed(2)}`, hypMidX, hypMidY);
 
-        // Draw legend
-        ctx.font = 'normal 12px sans-serif';
+        // Draw legend at top
+        ctx.font = 'normal 11px sans-serif';
         ctx.textAlign = 'left';
 
         // Area labels
@@ -127,20 +127,20 @@ export const PythagoreanVisualization = ({ sideA, sideB }: PythagoreanVisualizat
         const areaC = hypotenuse * hypotenuse;
 
         ctx.fillStyle = '#3B82F6';
-        ctx.fillText(`Area of a² = ${areaA.toFixed(2)}`, 20, 30);
+        ctx.fillText(`Area of a² = ${areaA.toFixed(2)}`, 20, 20);
 
         ctx.fillStyle = '#10B981';
-        ctx.fillText(`Area of b² = ${areaB.toFixed(2)}`, 20, 50);
+        ctx.fillText(`Area of b² = ${areaB.toFixed(2)}`, 20, 36);
 
         ctx.fillStyle = '#EF4444';
-        ctx.fillText(`Area of c² = ${areaC.toFixed(2)}`, 20, 70);
+        ctx.fillText(`Area of c² = ${areaC.toFixed(2)}`, 20, 52);
 
         // Show the equation
         ctx.fillStyle = '#1F2937';
-        ctx.font = 'bold 13px sans-serif';
-        ctx.fillText(`a² + b² = c²`, 20, 95);
-        ctx.font = 'normal 12px sans-serif';
-        ctx.fillText(`${areaA.toFixed(2)} + ${areaB.toFixed(2)} = ${areaC.toFixed(2)}`, 20, 110);
+        ctx.font = 'bold 12px sans-serif';
+        ctx.fillText(`a² + b² = c²`, 20, 72);
+        ctx.font = 'normal 11px sans-serif';
+        ctx.fillText(`${areaA.toFixed(2)} + ${areaB.toFixed(2)} = ${areaC.toFixed(2)}`, 20, 86);
 
     }, [sideA, sideB]);
 
