@@ -44,14 +44,14 @@ export const PythagoreanVisualization = ({ sideA, sideB }: PythagoreanVisualizat
         const legBEnd = { x: startX, y: startY - sideB * scale };
         const hypotenuse = Math.sqrt(sideA * sideA + sideB * sideB);
 
-        // Draw square on side A (blue) - to the right of the triangle
+        // Draw square on side A (blue) - below the triangle
         ctx.fillStyle = '#3B82F6';
         ctx.globalAlpha = 0.3;
-        ctx.fillRect(legAEnd.x, legAEnd.y, sideA * scale, sideA * scale);
+        ctx.fillRect(legAEnd.x - sideA * scale, legAEnd.y, sideA * scale, sideA * scale);
         ctx.globalAlpha = 1;
         ctx.strokeStyle = '#3B82F6';
         ctx.lineWidth = 2;
-        ctx.strokeRect(legAEnd.x, legAEnd.y, sideA * scale, sideA * scale);
+        ctx.strokeRect(legAEnd.x - sideA * scale, legAEnd.y, sideA * scale, sideA * scale);
 
         // Draw square on side B (green) - to the left of the triangle
         ctx.fillStyle = '#10B981';
