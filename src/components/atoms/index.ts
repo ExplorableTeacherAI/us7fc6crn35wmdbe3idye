@@ -115,6 +115,9 @@ export { MafsAnimated } from "./visual/MafsAnimated";
 export { MafsInteractive } from "./visual/MafsInteractive";
 export { MafsInteractiveDemo } from "./visual/MafsInteractiveDemo";
 
+// Visual — Custom Visualizations
+export { PythagoreanVisualization } from "./visual/PythagoreanVisualization";
+
 // Visual — React Flow Components
 export { FlowDiagram } from "./visual/FlowDiagram";
 export type { FlowNode, FlowEdge, FlowDiagramProps } from "./visual/FlowDiagram";

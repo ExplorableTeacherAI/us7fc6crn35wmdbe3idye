@@ -3,6 +3,9 @@ export { DesmosGraph } from "./visual/DesmosGraph";
 export { GeoGebraGraph } from "./visual/GeoGebraGraph";
 export { InteractiveAnimation } from "./visual/InteractiveAnimation";
 
+// Interactive Controls
+export { PythagoreanControls } from "./PythagoreanControls";
+
 // Renderer Components
 export { default as DesmosRenderer } from "./visual/DesmosRenderer";
 export { default as GeogebraRenderer } from "./visual/GeogebraRenderer";
