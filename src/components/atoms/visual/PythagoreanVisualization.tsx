@@ -87,17 +87,22 @@ export const PythagoreanVisualization = ({ sideA, sideB }: PythagoreanVisualizat
         const hypotenuseLength = hypotenuse * scale;
         const angle = Math.atan2(legBEnd.y - legAEnd.y, legBEnd.x - legAEnd.x);
 
+        // Calculate the perpendicular vector (normal to hypotenuse)
+        const normalAngle = angle + Math.PI / 2;
+        const normalX = Math.cos(normalAngle);
+        const normalY = Math.sin(normalAngle);
+
         ctx.save();
         ctx.translate(legAEnd.x, legAEnd.y);
         ctx.rotate(angle);
 
         ctx.fillStyle = '#EF4444';
         ctx.globalAlpha = 0.3;
-        ctx.fillRect(0, -hypotenuseLength, hypotenuseLength, hypotenuseLength);
+        ctx.fillRect(0, 0, hypotenuseLength, hypotenuseLength);
         ctx.globalAlpha = 1;
         ctx.strokeStyle = '#EF4444';
         ctx.lineWidth = 2;
-        ctx.strokeRect(0, -hypotenuseLength, hypotenuseLength, hypotenuseLength);
+        ctx.strokeRect(0, 0, hypotenuseLength, hypotenuseLength);
 
         ctx.restore();
 
